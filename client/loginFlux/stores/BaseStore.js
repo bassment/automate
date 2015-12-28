@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+var EventEmitter = require('events').EventEmitter;
 
 export default class BaseStore extends EventEmitter {
   emitChange() {

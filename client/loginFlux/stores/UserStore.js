@@ -4,12 +4,12 @@ import BaseStore from '../stores/BaseStore';
 import UserService from '../services/UserService';
 import UserConstants from '../constants/UserConstants';
 
-let _session = false;
-let _sessionError = null;
-let _sessionResolved = false;
+var _session = false;
+var _sessionError = null;
+var _sessionResolved = false;
 
 class UserStore extends BaseStore {
-  constructor() {
+  constructor() {
     super();
     this.service = null;
   }
@@ -24,17 +24,17 @@ class UserStore extends BaseStore {
   }
 
   isAuthenticated(callback) {
-    this.resolveSession(function(err) {
+    this.resolveSession(function (err, result) {
       callback(err, !err && _session !== false);
     });
   }
 
   login(options, callback) {
-    const self = this;
+    var self = this;
 
     this.reset();
 
-    this.service.login(options, function(err) {
+    this.service.login(options, function (err, result) {
       if (err) {
         return callback(err);
       }
@@ -60,9 +60,9 @@ class UserStore extends BaseStore {
   }
 
   logout(callback) {
-    const self = this;
+    var self = this;
 
-    this.service.logout(function(err) {
+    this.service.logout(function (err) {
       if (err) {
         return callback(err);
       }
@@ -75,13 +75,13 @@ class UserStore extends BaseStore {
   }
 
   resolveSession(callback) {
-    const self = this;
+    var self = this;
 
     if (_sessionResolved) {
       return callback && callback(_sessionError, _session);
     }
 
-    this.service.me(function(err, result) {
+    this.service.me(function (err, result) {
       self.reset();
 
       _sessionResolved = true;
@@ -107,40 +107,31 @@ class UserStore extends BaseStore {
   }
 }
 
-const userStore = new UserStore();
+var userStore = new UserStore();
 
-app.on('ready', function(context) {
+app.on('ready', function (context) {
   userStore.init(context);
-  context.getDispatcher().register(function(payload) {
-    switch (payload.actionType) {
-    case UserConstants.USER_LOGIN: {
-      userStore.login(payload.options, payload.callback);
-      break;
+  context.getDispatcher().register(function (payload) {
+    switch(payload.actionType) {
+      case UserConstants.USER_LOGIN:
+        userStore.login(payload.options, payload.callback);
+        break;
+      case UserConstants.USER_LOGOUT:
+        userStore.logout(payload.callback);
+        break;
+      case UserConstants.USER_REGISTER:
+        userStore.register(payload.options, payload.callback);
+        break;
+      case UserConstants.USER_FORGOT_PASSWORD:
+        userStore.forgotPassword(payload.options, payload.callback);
+        break;
+      case UserConstants.USER_CHANGE_PASSWORD:
+        userStore.changePassword(payload.options, payload.callback);
+        break;
+      case UserConstants.USER_VERIFY_EMAIL:
+        userStore.verifyEmail(payload.options.spToken, payload.callback);
+        break;
     }
-    case UserConstants.USER_LOGOUT: {
-      userStore.logout(payload.callback);
-      break;
-    }
-    case UserConstants.USER_REGISTER: {
-      userStore.register(payload.options, payload.callback);
-      break;
-    }
-    case UserConstants.USER_FORGOT_PASSWORD: {
-      userStore.forgotPassword(payload.options, payload.callback);
-      break;
-    }
-    case UserConstants.USER_CHANGE_PASSWORD: {
-      userStore.changePassword(payload.options, payload.callback);
-      break;
-    }
-    case UserConstants.USER_VERIFY_EMAIL: {
-      userStore.verifyEmail(payload.options.spToken, payload.callback);
-      break;
-    }
-    default:
-    // do nothing
-    }
-
     return true;
   });
 });

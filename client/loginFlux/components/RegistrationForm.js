@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMixin from 'react-mixin';
 import { History, Link } from 'react-router';
 
 import LoginLink from '../components/LoginLink';
@@ -142,3 +143,5 @@ export default class RegistrationForm extends React.Component {
     );
   }
 }
+
+ReactMixin.onClass(RegistrationForm, History);

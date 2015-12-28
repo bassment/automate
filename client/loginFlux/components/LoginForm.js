@@ -1,17 +1,17 @@
 import React from 'react';
-// import ReactMixin from 'react-mixin';
+import ReactMixin from 'react-mixin';
 import { History, Link } from 'react-router';
 
 import Context from './../Context';
 import UserActions from '../actions/UserActions';
 
-// @ReactMixin.decorate(History)
 export default class LoginForm extends React.Component {
   state = {
     username: '',
     password: '',
     isProcessing: false,
-    errorMessage: null
+    errorMessage: null,
+    history: this.props.history
   }
 
   onFormSubmit(e) {
@@ -50,7 +50,7 @@ export default class LoginForm extends React.Component {
       <div className='login'>
         <div className="row">
           <div className="col-xs-12">
-            <form className="form-horizontal">
+            <form className="form-horizontal" onSubmit={this.onFormSubmit.bind(this)}>
               <div className="form-group">
                 <label htmlFor="spEmail" className="col-xs-12 col-sm-4 control-label">Email</label>
                 <div className="col-xs-12 col-sm-4">
@@ -79,3 +79,5 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+ReactMixin.onClass(LoginForm, History);

@@ -17,7 +17,6 @@ export default class Context {
     if (!contextInstance) {
       return new Context();
     }
-
     return contextInstance;
   }
 
@@ -42,6 +41,6 @@ export default class Context {
   }
 
   getEndpoints() {
-    return this.endpoints || {};
+    return this.endpoints || {};
   }
 }

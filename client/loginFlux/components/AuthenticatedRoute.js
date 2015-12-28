@@ -13,7 +13,7 @@ export default class AuthenticatedRoute extends Route {
 
       UserStore.isAuthenticated(function (err, authenticated) {
         if (err || !authenticated) {
-          replaceState({nextPathname: nextState.location.pathname}, redirectTo);
+          replaceState({ nextPathname: nextState.location.pathname }, redirectTo);
         }
         callback();
       });

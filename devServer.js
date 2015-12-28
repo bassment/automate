@@ -42,7 +42,7 @@ var transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: 'anton.perebyinis@gmail.com',
-    pass: '250721BASS'
+    pass: process.env.GMAIL
   }
 });
 
@@ -52,11 +52,7 @@ var mailOptions = {
   subject: 'Tests'
 };
 
-app.route('/api/test')
-.get(function (req, res) {
-  res.send('Hello')
-})
-.post(function (req, res) {
+app.post('/api/test', function (req, res) {
   mailOptions.html = Object.keys(req.body)[0]
   transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
@@ -72,6 +68,8 @@ app.get('*', function response(req, res) {
 });
 
 app.on('stormpath.ready', function () {
+  console.log('Stormpath Ready');
+
   app.listen(config._hotPort, 'localhost', function(err) {
     if (err) {
       console.log(err);

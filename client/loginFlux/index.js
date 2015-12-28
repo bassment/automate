@@ -28,6 +28,6 @@ export UserComponent from './components/UserComponent';
 // instead of ReactStormpath.default.init().
 export function init() {
   app.init(...arguments);
-}
+};
 
 export default app;

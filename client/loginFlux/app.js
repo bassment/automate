@@ -10,10 +10,10 @@ class App extends EventEmitter {
   }
 
   init(options) {
-    options = options || {};
+    options = options || {};
 
     // If there's no specified dispatcher, then just create our own one.
-    this.context.setDispatcher(options.dispatcher || new Dispatcher());
+    this.context.setDispatcher(options.dispatcher || new Dispatcher());
 
     // If there are any endpoints specified, then set these.
     if (options.endpoints) {
@@ -24,4 +24,4 @@ class App extends EventEmitter {
   }
 }
 
-export default new App(Context.getInstance());
+export default new App(Context.getInstance())

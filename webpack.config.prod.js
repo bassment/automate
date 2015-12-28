@@ -9,7 +9,7 @@ var StatsPlugin = require('stats-webpack-plugin');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    path.join(__dirname, 'src/main.js')
+    path.join(__dirname, 'client/main.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -18,7 +18,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index.tpl.html',
+      template: 'client/index.tpl.html',
       inject: 'body',
       filename: 'index.html'
     }),
