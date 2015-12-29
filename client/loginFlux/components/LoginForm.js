@@ -10,8 +10,7 @@ export default class LoginForm extends React.Component {
     username: '',
     password: '',
     isProcessing: false,
-    errorMessage: null,
-    history: this.props.history
+    errorMessage: null
   }
 
   onFormSubmit(e) {
