@@ -12,15 +12,13 @@ module.exports = {
     });
   },
   postJSON(url, data) {
-    return new Promise(function callback(success, error) {
+    return new Promise(function callback() {
       $.ajax({
-        type: "POST",
+        type: 'POST',
         url: url,
         data: data,
         dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success,
-        error
+        contentType: 'application/json; charset=utf-8'
       });
     });
   },

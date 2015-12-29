@@ -9,14 +9,13 @@ class FacebookLogin extends React.Component {
     scope: PropTypes.string,
     textButton: PropTypes.string,
     autoLoad: PropTypes.bool,
-    size: PropTypes.string
+    size: PropTypes.string,
+    cookie: PropTypes.string
   };
 
   static defaultProps = {
-    textButton: 'Login with Facebook',
     scope: 'public_profile, email',
-    xfbml: true,
-    size: 'medium'
+    xfbml: true
   };
 
   constructor(props) {
@@ -37,7 +36,7 @@ class FacebookLogin extends React.Component {
       }
     };
 
-    var loadAsync = function(d, s, id) {
+    const loadAsync = function async(d, s, id) {
       const element = d.getElementsByTagName(s)[0];
       const fjs = element;
       let js = element;
@@ -46,7 +45,7 @@ class FacebookLogin extends React.Component {
       js = d.createElement(s); js.id = id;
       js.src = '//connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
-    }
+    };
 
     // Load the SDK asynchronously
     loadAsync(document, 'script', 'facebook-jssdk');
@@ -76,8 +75,8 @@ class FacebookLogin extends React.Component {
   render() {
     return (
       <div>
-        <button className={this.props.size} onClick={this.click}>
-            {this.props.textButton}
+        <button onClick={this.click}>
+            Login with Facebook
         </button>
       </div>
     );
