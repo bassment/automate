@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
 class FacebookLogin extends React.Component {
-
   static propTypes = {
     callback: PropTypes.func.isRequired,
     appId: PropTypes.string.isRequired,
@@ -11,12 +10,12 @@ class FacebookLogin extends React.Component {
     autoLoad: PropTypes.bool,
     size: PropTypes.string,
     cookie: PropTypes.string
-  };
+  }
 
   static defaultProps = {
     scope: 'public_profile, email',
     xfbml: true
-  };
+  }
 
   constructor(props) {
     super(props);
@@ -56,17 +55,18 @@ class FacebookLogin extends React.Component {
       me.accessToken = authResponse.accessToken;
       this.props.callback(me);
     });
-  };
+  }
 
   checkLoginState = (response) => {
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
       if (this.props.callback) {
+        console.log(response.status);
         this.props.callback({status: response.status});
       }
     }
-  };
+  }
 
   click = () => {
     FB.login(this.checkLoginState, {scope: this.props.scope});

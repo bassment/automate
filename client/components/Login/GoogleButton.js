@@ -44,12 +44,11 @@ class GoogleLogin extends React.Component {
       'output': 'embed',
       'scope': this.props.scopes || 'https://www.googleapis.com/auth/plus.me'
     };
-    const that = this;
+    const self = this;
 
     gapi.auth.authorize(config, function cb() {
       const response = gapi.auth.getToken();
-      const token = response.access_token;
-      that.props.loginHandler(token);
+      self.props.loginHandler(response);
     });
   }
 

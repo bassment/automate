@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactMixin from 'react-mixin';
-import { History, Link } from 'react-router';
+import { Link } from 'react-router';
 
 import Context from './../Context';
 import UserActions from '../actions/UserActions';
@@ -26,12 +25,12 @@ export default class LoginForm extends React.Component {
       username: this.state.username,
       password: this.state.password
     }, function (err, result) {
-      self.setState({ isProcessing: false });
+      self.setState({isProcessing: false});
 
       if (err) {
-        self.setState({ errorMessage: err.message });
+        self.setState({errorMessage: err.message});
       } else {
-        self.history.pushState(null, redirectTo);
+        self.props.history.pushState(null, redirectTo);
       }
     });
   }
@@ -78,5 +77,3 @@ export default class LoginForm extends React.Component {
     );
   }
 }
-
-ReactMixin.onClass(LoginForm, History);

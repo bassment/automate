@@ -8,7 +8,7 @@ export default class ProfilePage extends UserComponent {
   }
 
   render() {
-    var user = this.state.user;
+    const user = this.state.user;
 
     return (
       <div className="container">

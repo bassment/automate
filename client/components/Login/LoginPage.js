@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import helper from '../../helpers/RestHelper';
 
 import { LoginForm } from '../../loginFlux/index';
@@ -6,6 +6,11 @@ import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
 
 export default class LoginPage extends React.Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
+  }
+
   responseFacebook(response)  {
     const res = {
       providerData: {
@@ -14,16 +19,24 @@ export default class LoginPage extends React.Component {
       }
     };
     helper.postJSON('login', JSON.stringify(res));
+
+    if (response.accessToken) {
+      this.props.history.pushState(null, '/');
+    }
   }
 
-  responseGoogle(token)  {
+  responseGoogle(response)  {
     const res = {
       providerData: {
         providerId: 'google',
-        accessToken: token
+        accessToken: response.access_token
       }
     };
     helper.postJSON('login', JSON.stringify(res));
+
+    if (response.access_token) {
+      this.props.history.pushState(null, '/');
+    }
   }
 
   render() {
@@ -35,7 +48,7 @@ export default class LoginPage extends React.Component {
             <hr />
           </div>
         </div>
-        <LoginForm redirectTo="/profile" />
+        <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
         <br />
           <FacebookButton
             appId="1657718361176429"

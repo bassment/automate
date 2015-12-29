@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMixin from 'react-mixin';
-import { History, Link } from 'react-router';
+import { History } from 'react-router';
 
 import LoginLink from '../components/LoginLink';
 import UserActions from '../actions/UserActions';
