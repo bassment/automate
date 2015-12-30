@@ -1,4 +1,5 @@
 import style from '../../css/components/Home.css';
+import styles from './HomeStyling';
 
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -13,6 +14,8 @@ const Home = React.createClass({
     };
   },
 
+  // Render Methods
+
   increment() {
     this.setState({
       counter: this.state.counter += 1
@@ -22,8 +25,8 @@ const Home = React.createClass({
   render() {
     return (
       <div>
-        <Helmet title="Automate!"/>
-        <Paper style={{width: '60%', margin: '100px auto 0'}}>
+        <Helmet title="Automate"/>
+        <Paper style={styles.paper}>
           <section className={style.section}>
             <Counter
               count={this.state.counter}

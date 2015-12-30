@@ -1,30 +1,14 @@
-import { Styles } from 'material-ui';
-import myTheme from './myTheme';
-
 import React from 'react';
 
 import { AppCanvas, AppBar } from 'material-ui';
-import MenuBar from './MenuBar.js';
+import MenuBar from './MenuBar';
 import LeftBar from './LeftBar';
 
-const ThemeManager = Styles.ThemeManager;
-
-const App = React.createClass({
-
+const Layout = React.createClass({
   propTypes: {
     children: React.PropTypes.node.isRequired,
     history: React.PropTypes.object,
     location: React.PropTypes.object
-  },
-
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getMuiTheme(myTheme)
-    };
   },
 
   componentWillMount() {
@@ -72,4 +56,4 @@ const App = React.createClass({
   }
 });
 
-export default App;
+export default Layout;

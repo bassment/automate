@@ -1,22 +1,21 @@
-import {  Styles } from 'material-ui';
+import styles from './LeftBarStyling';
 
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import { LeftNav, List, ListItem, Divider } from 'material-ui';
 import { SelectableContainerEnhance } from 'material-ui/lib/hoc/selectable-enhance';
 
 const SelectableList = SelectableContainerEnhance(List);
-const {Spacing, Typography} = Styles;
 
 const AppLeftNav = React.createClass({
   propTypes: {
-    history: React.PropTypes.object,
-    location: React.PropTypes.object
+    history: PropTypes.object,
+    location: PropTypes.object
   },
 
   contextTypes: {
-    muiTheme: React.PropTypes.object,
-    router: React.PropTypes.func
+    muiTheme: PropTypes.object,
+    router: PropTypes.func
   },
 
   getInitialState() {
@@ -25,20 +24,7 @@ const AppLeftNav = React.createClass({
     };
   },
 
-  // Render Method Functions
-
-  getStyles() {
-    return {
-      cursor: 'pointer',
-      fontSize: 24,
-      color: Typography.textFullWhite,
-      lineHeight: Spacing.desktopKeylineIncrement + 'px',
-      fontWeight: Typography.fontWeightLight,
-      backgroundColor: '#E64A19',
-      paddingLeft: Spacing.desktopGutter,
-      marginBottom: 8
-    };
-  },
+  // Render Methods
 
   toggle() {
     this.setState({leftNavOpen: !this.state.leftNavOpen});
@@ -82,7 +68,7 @@ const AppLeftNav = React.createClass({
         open={this.state.leftNavOpen}
         onRequestChange={this.handleChangeRequestLeftNav}>
         <div
-          style={this.getStyles()}
+          style={styles.menuHeader}
           onTouchTap={this.handleTouchTapHeader}>
           automate !
         </div>

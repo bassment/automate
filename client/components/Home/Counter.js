@@ -11,9 +11,9 @@ const Counter = React.createClass({
     onIncrement: PropTypes.func.isRequired
   },
 
+  // Render Methods
+
   increment() {
-    // maybe I'd like to do something here
-    // for the moment I just call the callback passed from the parent
     return this.props.onIncrement();
   },
 

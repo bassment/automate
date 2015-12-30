@@ -1,21 +1,14 @@
-import { Styles } from 'material-ui';
-import myTheme from './myTheme';
-import styles from './MenuBarCSS.js';
+import styles from './MenuBarStyling';
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Radium from 'radium';
 
 import { Paper, EnhancedButton, Tabs, Tab } from 'material-ui';
 
-const ThemeManager = Styles.ThemeManager;
-
 const MenuBar = React.createClass({
   propTypes: {
-    history: React.PropTypes.object
-  },
-
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
+    history: PropTypes.object,
+    location: PropTypes.object
   },
 
   getInitialState() {
@@ -24,13 +17,7 @@ const MenuBar = React.createClass({
     };
   },
 
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getMuiTheme(myTheme)
-    };
-  },
-
-  // Render Method Functions
+  // Render Methods
 
   handleTabChange(value, e, tab) {
     this.props.history.pushState(null, tab.props.route);
