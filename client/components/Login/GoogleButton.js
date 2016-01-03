@@ -8,7 +8,7 @@ class GoogleLogin extends React.Component {
   }
 
   static defaultProps = {
-    scopes: 'email'
+    scopes: 'profile'
   }
 
   constructor(props) {

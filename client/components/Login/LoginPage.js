@@ -1,11 +1,15 @@
 import React, { PropTypes } from 'react';
-import helper from '../../helpers/RestHelper';
+import helper from '../../helpers/JsRestHelper';
 
 import { LoginForm } from '../../loginFlux/index';
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
 
 export default class LoginPage extends React.Component {
+  state = {
+    errorMessage: null
+  }
+
   static propTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
@@ -17,12 +21,17 @@ export default class LoginPage extends React.Component {
         providerId: 'facebook',
         accessToken: response.accessToken
       }
-    };
-    helper.postJSON('login', JSON.stringify(res));
-
-    if (response.accessToken) {
-      this.props.history.pushState(null, '/');
     }
+
+    const self = this
+    helper.makeRequest('post', '/login', res, function (err, result) {
+      if (err) {
+        self.setState({errorMessage: err.message});
+      } else {
+        // window.location.reload();
+        self.props.history.pushState(null, '/tests');
+      }
+    })
   }
 
   responseGoogle(response)  {
@@ -32,11 +41,15 @@ export default class LoginPage extends React.Component {
         accessToken: response.access_token
       }
     };
-    helper.postJSON('login', JSON.stringify(res));
-
-    if (response.access_token) {
-      this.props.history.pushState(null, '/');
-    }
+    const self = this
+    helper.makeRequest('post', '/login', res, function (err, result) {
+      if (err) {
+        self.setState({errorMessage: err.message});
+      } else {
+        // window.location.reload();
+        self.props.history.pushState(null, '/tests');
+      }
+    })
   }
 
   render() {
@@ -50,6 +63,7 @@ export default class LoginPage extends React.Component {
         </div>
         <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
         <br />
+        <p>{this.state.errorMessage}</p>
           <FacebookButton
             appId="1657718361176429"
             autoLoad={false}
