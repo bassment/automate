@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+import { IconButton } from 'material-ui';
+
 class GoogleLogin extends React.Component {
   static propTypes = {
     loginHandler: PropTypes.func.isRequired,
@@ -54,11 +56,9 @@ class GoogleLogin extends React.Component {
 
   render() {
     return (
-      <div>
-        <button onClick={ this.handleClick }>
-          Google Login
-        </button>
-      </div>
+      <IconButton style={{width: 'initial', height: 'initial'}}
+        iconStyle={{fontSize: 50, color: '#E64A19'}} iconClassName="material-icons" tooltipPosition="bottom-center"
+        tooltip="Login with Google" onClick={this.handleClick}>android</IconButton>
     );
   }
 }

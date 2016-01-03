@@ -1,11 +1,14 @@
+import styles from './LoginPageStyling';
+
 import React, { PropTypes } from 'react';
 import helper from '../../helpers/JsRestHelper';
+import Radium from 'radium';
 
 import { LoginForm } from '../../loginFlux/index';
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
   state = {
     errorMessage: null
   }
@@ -54,25 +57,29 @@ export default class LoginPage extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-12">
-            <h3>Login</h3>
-            <hr />
+      <div>
+        <div style={styles.fullscreenBg}>
+          <video loop autoPlay style={styles.fullscreenBgVideo}>
+              <source src="video/RaccoonLow.webm" type="video/webm"/>
+          </video>
+        </div>
+        <div style={styles.verticalCenter}>
+          <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
+          <br />
+          <div className="social-buttons" style={styles.socialButtons}>
+            <FacebookButton
+              appId="1657718361176429"
+              autoLoad={false}
+              callback={this.responseFacebook.bind(this)} />
+            <GoogleButton
+              clientID="47081224876-evbt3tj0vvi1b05a7hnp4fn3dr7inohh.apps.googleusercontent.com"
+              loginHandler={this.responseGoogle.bind(this)} />
           </div>
         </div>
-        <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
-        <br />
-        <p>{this.state.errorMessage}</p>
-          <FacebookButton
-            appId="1657718361176429"
-            autoLoad={false}
-            callback={this.responseFacebook.bind(this)} />
-        <br />
-          <GoogleButton
-            clientID="47081224876-evbt3tj0vvi1b05a7hnp4fn3dr7inohh.apps.googleusercontent.com"
-            loginHandler={this.responseGoogle.bind(this)} />
       </div>
     );
   }
 }
+
+/*eslint-disable */
+module.exports = Radium(LoginPage);

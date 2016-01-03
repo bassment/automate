@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+import { IconButton } from 'material-ui';
+
 class FacebookLogin extends React.Component {
 
   static propTypes = {
@@ -13,7 +15,7 @@ class FacebookLogin extends React.Component {
   };
 
   static defaultProps = {
-    textButton: 'Login with Facebook',
+    textButton: 'Facebook',
     scope: 'public_profile, email',
     xfbml: true,
     size: 'medium'
@@ -75,11 +77,9 @@ class FacebookLogin extends React.Component {
 
   render() {
     return (
-      <div>
-        <button className={this.props.size} onClick={this.click}>
-            {this.props.textButton}
-        </button>
-      </div>
+      <IconButton style={{width: 'initial', height: 'initial'}}
+        iconStyle={{fontSize: 50, color: '#E64A19'}} iconClassName="material-icons" tooltipPosition="bottom-center"
+        tooltip="Login with Facebook" onClick={this.click}>face</IconButton>
     );
   }
 }

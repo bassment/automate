@@ -35,22 +35,22 @@ const Layout = React.createClass({
     }
 
     return (
-     <div>
+     <AppCanvas>
        <AppBar
          onLeftIconButtonTouchTap={this.onLeftIconButtonTouchTap}
          title={title}
          zDepth={0}/>
-     </div>);
+     </AppCanvas>);
   },
 
   render() {
     return (
       <div>
-        <AppCanvas>
+        <div>
           {this.state.renderTabs ? <MenuBar history={this.props.history} location={this.props.location}/> : this.getAppBar()}
           <LeftBar ref="leftNav" history={this.props.history} location={this.props.location}/>
           {this.props.children}
-        </AppCanvas>
+        </div>
       </div>
     );
   }
