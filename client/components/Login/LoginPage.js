@@ -1,16 +1,18 @@
 import styles from './LoginPageStyling';
-
-import React, { PropTypes } from 'react';
-import helper from '../../helpers/JsRestHelper';
 import Radium from 'radium';
 
-import { LoginForm } from '../../loginFlux/index';
+import React, { PropTypes } from 'react';
+import UserActions from '../../loginFlux/actions/UserActions';
+import helper from '../../helpers/JsRestHelper';
+
+import { LoginForm, NotAuthenticated } from '../../loginFlux/index';
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
 
 class LoginPage extends React.Component {
   state = {
-    errorMessage: null
+    errorMessage: null,
+    isProcessing: false
   }
 
   static propTypes = {
@@ -26,15 +28,21 @@ class LoginPage extends React.Component {
       }
     }
 
-    const self = this
-    helper.makeRequest('post', '/login', res, function (err, result) {
+    var self = this;
+
+    var redirectTo = this.props.redirectTo || '/';
+
+    self.setState({isProcessing: true});
+
+    UserActions.login(res, function (err, result) {
+      self.setState({isProcessing: false});
+
       if (err) {
         self.setState({errorMessage: err.message});
       } else {
-        // window.location.reload();
-        self.props.history.pushState(null, '/tests');
+        self.props.history.pushState(null, redirectTo);
       }
-    })
+    });
   }
 
   responseGoogle(response)  {
@@ -44,38 +52,46 @@ class LoginPage extends React.Component {
         accessToken: response.access_token
       }
     };
-    const self = this
-    helper.makeRequest('post', '/login', res, function (err, result) {
+
+    var self = this;
+
+    var redirectTo = this.props.redirectTo || '/profile';
+
+    self.setState({isProcessing: true});
+
+    UserActions.login(res, function (err, result) {
+      self.setState({isProcessing: false});
+
       if (err) {
         self.setState({errorMessage: err.message});
       } else {
-        // window.location.reload();
-        self.props.history.pushState(null, '/tests');
+        self.props.history.pushState(null, redirectTo);
       }
-    })
+    });
   }
 
   render() {
     return (
       <div>
-        <div style={styles.fullscreenBg}>
-          <video loop autoPlay style={styles.fullscreenBgVideo}>
-              <source src="video/RaccoonLow.webm" type="video/webm"/>
-          </video>
-        </div>
-        <div style={styles.verticalCenter}>
-          <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
-          <br />
-          <div className="social-buttons" style={styles.socialButtons}>
-            <FacebookButton
-              appId="1657718361176429"
-              autoLoad={false}
-              callback={this.responseFacebook.bind(this)} />
-            <GoogleButton
-              clientID="47081224876-evbt3tj0vvi1b05a7hnp4fn3dr7inohh.apps.googleusercontent.com"
-              loginHandler={this.responseGoogle.bind(this)} />
+          <div style={styles.fullscreenBg}>
+            <video loop autoPlay style={styles.fullscreenBgVideo}>
+                <source src="video/RaccoonLow.webm" type="video/webm"/>
+            </video>
           </div>
-        </div>
+          <div style={styles.verticalCenter}>
+            <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
+            <br />
+            <div className="social-buttons" style={styles.socialButtons}>
+              <FacebookButton
+                appId="1657718361176429"
+                autoLoad={false}
+                callback={this.responseFacebook.bind(this)} />
+              <GoogleButton
+                clientID="47081224876-evbt3tj0vvi1b05a7hnp4fn3dr7inohh.apps.googleusercontent.com"
+                scopes="email"
+                loginHandler={this.responseGoogle.bind(this)} />
+            </div>
+          </div>
       </div>
     );
   }

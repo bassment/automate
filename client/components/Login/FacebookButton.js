@@ -9,13 +9,10 @@ class FacebookLogin extends React.Component {
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
     scope: PropTypes.string,
-    textButton: PropTypes.string,
-    autoLoad: PropTypes.bool,
-    size: PropTypes.string
+    autoLoad: PropTypes.bool
   };
 
   static defaultProps = {
-    textButton: 'Facebook',
     scope: 'public_profile, email',
     xfbml: true,
     size: 'medium'
@@ -45,7 +42,8 @@ class FacebookLogin extends React.Component {
       let js = element;
 
       if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
+      js = d.createElement(s);
+    textButton: PropTypes.string,js.id = id;
       js.src = '//connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     }

@@ -17,6 +17,7 @@ export default class Context {
     if (!contextInstance) {
       return new Context();
     }
+
     return contextInstance;
   }
 
