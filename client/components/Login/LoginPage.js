@@ -5,11 +5,11 @@ import React, { PropTypes } from 'react';
 import UserActions from '../../loginFlux/actions/UserActions';
 import helper from '../../helpers/JsRestHelper';
 
-import { LoginForm, NotAuthenticated } from '../../loginFlux/index';
+import { LoginForm, Authenticated, NotAuthenticated, UserComponent } from '../../loginFlux/index';
 import FacebookButton from './FacebookButton';
 import GoogleButton from './GoogleButton';
 
-class LoginPage extends React.Component {
+class LoginPage extends UserComponent {
   state = {
     errorMessage: null,
     isProcessing: false
@@ -73,25 +73,29 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div>
-          <div style={styles.fullscreenBg}>
-            <video loop autoPlay style={styles.fullscreenBgVideo}>
-                <source src="video/RaccoonLow.webm" type="video/webm"/>
-            </video>
-          </div>
-          <div style={styles.verticalCenter}>
-            <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
-            <br />
-            <div className="social-buttons" style={styles.socialButtons}>
-              <FacebookButton
-                appId="1657718361176429"
-                autoLoad={false}
-                callback={this.responseFacebook.bind(this)} />
-              <GoogleButton
-                clientID="47081224876-evbt3tj0vvi1b05a7hnp4fn3dr7inohh.apps.googleusercontent.com"
-                scopes="email"
-                loginHandler={this.responseGoogle.bind(this)} />
+        <div style={styles.verticalCenter}>
+          <NotAuthenticated>
+            <div>
+              <LoginForm redirectTo="/profile" history={this.props.history} location={this.props.location} />
+              <br />
+              <div className="social-buttons" style={styles.socialButtons}>
+                <FacebookButton
+                  appId="1657718361176429"
+                  autoLoad={false}
+                  callback={this.responseFacebook.bind(this)} />
+                <GoogleButton
+                  clientID="47081224876-evbt3tj0vvi1b05a7hnp4fn3dr7inohh.apps.googleusercontent.com"
+                  scopes="email"
+                  loginHandler={this.responseGoogle.bind(this)} />
             </div>
           </div>
+          </NotAuthenticated>
+          <Authenticated>
+            <div>
+              You are already logged in as {this.state.user ? this.state.user.givenName : ''}!
+            </div>
+          </Authenticated>
+        </div>
       </div>
     );
   }

@@ -48,28 +48,27 @@ export default class LoginForm extends React.Component {
 
   render() {
     return (
-      <div className='login'>
+      <div  className='login'>
         <form onSubmit={this.onFormSubmit.bind(this)}>
+          <h2 style={styles.header}>Sign In</h2>
           <TextField
+            style={styles.field}
             hintText="Email Field"
-            hintStyle={{color: 'orange'}}
             floatingLabelText="Email"
             onChange={this.onUsernameChanged.bind(this)} />
-          <br />
           <TextField
+            style={styles.field}
             hintText="Password Field"
-            hintStyle={{color: 'orange'}}
             floatingLabelText="Password"
             type="password"
             onChange={this.onPasswordChanged.bind(this)} />
-          <br />
           { this.state.errorMessage === null ?
             null : <p className="text-danger">{this.state.errorMessage}</p>
           }
-          <div style={styles.buttons} className='buttons'>
-            <RaisedButton type="submit" label="Login" secondary={true} disabled={this.state.isProcessing} />
-            <br />
-            <Link style={{color: '#E64A19'}} to="/forgot">Forgot Password</Link>
+          <div style={styles.links} className='sign-buttons'>
+            <RaisedButton style={styles.signInButton} type="submit" label="Sign In" secondary={true} disabled={this.state.isProcessing} />
+            <Link to="/register"><RaisedButton label="Sign Up" primary={true} /></Link>
+            <Link style={styles.forgot} to="/forgot">Forgot Password</Link>
           </div>
         </form>
       </div>

@@ -18,10 +18,11 @@ export default class ResetPasswordForm extends React.Component {
 
     UserActions.forgotPassword(this.state.fields, function (err) {
       if (err) {
-        self.setState({ errorMessage: err.message });
+        self.setState({errorMessage: err.message});
+
         return;
       }
-      self.setState({ isRequestSent: true });
+      self.setState({isRequestSent: true});
     });
   }
 

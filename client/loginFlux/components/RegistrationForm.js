@@ -1,9 +1,14 @@
+import styles from './RegistrationFormStyling';
+
 import React from 'react';
-import ReactMixin from 'react-mixin';
-import { History } from 'react-router';
+import { Link } from 'react-router';
+// import ReactMixin from 'react-mixin';
+// import { History } from 'react-router';
 
 import LoginLink from '../components/LoginLink';
 import UserActions from '../actions/UserActions';
+
+import { TextField, RaisedButton } from 'material-ui';
 
 export default class RegistrationForm extends React.Component {
   state = {
@@ -83,65 +88,56 @@ export default class RegistrationForm extends React.Component {
 
   render() {
     return (
-      <div className='sp-login-form'>
+      <div style={styles.verticalCenter} className='sp-login-form'>
         { this.state.isAccountCreated ?
-          <div className="row">
-            <div className="col-sm-offset-4 col-xs-12 col-sm-4">
-              { this.state.isAccountEnabled ?
-                <p className="alert alert-success">Your account has been created. <LoginLink>Login Now</LoginLink>.</p>
-              :
-                <div>
-                  <p className="alert alert-success">Your account has been created. Please check your email for a verification link.</p>
-                  <p className="pull-right">
-                    <LoginLink>Back to Login</LoginLink>
-                  </p>
-                </div>
-              }
-            </div>
+          <div>
+            { this.state.isAccountEnabled ?
+              <p>Your account has been created. <LoginLink>Login Now</LoginLink>.</p>
+            :
+              <div>
+                <p>Your account has been created. Please check your email for a verification link.</p>
+                <p>
+                  <LoginLink>Back to Login</LoginLink>
+                </p>
+              </div>
+            }
           </div>
         :
-          <div className="row">
-            <div className="col-xs-12">
-              <form className="form-horizontal" onSubmit={this.onFormSubmit.bind(this)}>
-                <div className="form-group">
-                  <label htmlFor="spFirstName" className="col-xs-12 col-sm-4 control-label">First Name</label>
-                  <div className="col-xs-12 col-sm-4">
-                    <input className="form-control" id="spFirstName" placeholder="First Name" disabled={this.state.isProcessing} onChange={this.onFirstNameChanged.bind(this)} />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="spLastName" className="col-xs-12 col-sm-4 control-label">Last Name</label>
-                  <div className="col-xs-12 col-sm-4">
-                    <input className="form-control" id="spLastName" placeholder="Last Name" disabled={this.state.isProcessing} onChange={this.onLastNameChanged.bind(this)} />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="spEmail" className="col-xs-12 col-sm-4 control-label">Email</label>
-                  <div className="col-xs-12 col-sm-4">
-                    <input className="form-control" id="spEmail" placeholder="Email" disabled={this.state.isProcessing} onChange={this.onEmailChanged.bind(this)} />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="spPassword" className="col-xs-12 col-sm-4 control-label">Password</label>
-                  <div className="col-xs-12 col-sm-4">
-                    <input type="password" className="form-control" id="spPassword" placeholder="Password" disabled={this.state.isProcessing} onChange={this.onPasswordChanged.bind(this)} />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <div className="col-sm-offset-4 col-sm-4">
-                    { this.state.errorMessage === null ?
-                      null : <p className="alert alert-danger">{this.state.errorMessage}</p>
-                    }
-                    <button type="submit" className="btn btn-primary" disabled={this.state.isProcessing}>Register</button>
-                  </div>
-                </div>
-              </form>
+          <form onSubmit={this.onFormSubmit.bind(this)}>
+            <h2 style={styles.header}>Sign Up</h2>
+            <TextField
+              style={styles.field}
+              hintText="First Name"
+              disabled={this.state.isProcessing}
+              onChange={this.onFirstNameChanged.bind(this)} />
+            <TextField
+              style={styles.field}
+              hintText="Last Name"
+              disabled={this.state.isProcessing}
+              onChange={this.onLastNameChanged.bind(this)} />
+            <TextField
+              style={styles.field}
+              hintText="Email"
+              disabled={this.state.isProcessing}
+              onChange={this.onEmailChanged.bind(this)} />
+            <TextField
+              style={styles.field}
+              type="password"
+              hintText="Password"
+              disabled={this.state.isProcessing}
+              onChange={this.onPasswordChanged.bind(this)} />
+            { this.state.errorMessage === null ?
+              null : <p>{this.state.errorMessage}</p>
+            }
+            <div style={styles.links}>
+              <RaisedButton style={styles.signUpLink} type="submit" label="Sign Up" disabled={this.state.isProcessing} secondary={true} />
+              <Link to="/login"><RaisedButton label="Back to Sign In" primary={true} /></Link>
             </div>
-          </div>
+          </form>
         }
       </div>
     );
   }
 }
 
-ReactMixin.onClass(RegistrationForm, History);
+// ReactMixin.onClass(RegistrationForm, History);
